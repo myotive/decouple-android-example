@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item android:id="@+id/nav_non_dagger" android:icon="@android:drawable/ic_input_get"
+            android:title="Non Dagger Sample" />
+
+        <item android:id="@+id/nav_dagger" android:icon="@android:drawable/ic_menu_manage"
+            android:title="Dagger Sample" />
+
+        <item android:id="@+id/nav_otto" android:icon="@android:drawable/ic_dialog_map"
+            android:title="Otto Sample" />
+        <item android:id="@+id/nav_gallery" android:icon="@android:drawable/ic_menu_gallery"
+            android:title="Gallery" />
+        <item android:id="@+id/nav_slideshow" android:icon="@android:drawable/ic_menu_slideshow"
+            android:title="Slideshow" />
+    </group>
+
+</menu>
