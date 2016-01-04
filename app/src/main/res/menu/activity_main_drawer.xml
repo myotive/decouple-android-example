@@ -10,10 +10,6 @@
 
         <item android:id="@+id/nav_otto" android:icon="@android:drawable/ic_dialog_map"
             android:title="Otto Sample" />
-        <item android:id="@+id/nav_gallery" android:icon="@android:drawable/ic_menu_gallery"
-            android:title="Gallery" />
-        <item android:id="@+id/nav_slideshow" android:icon="@android:drawable/ic_menu_slideshow"
-            android:title="Slideshow" />
     </group>
 
 </menu>

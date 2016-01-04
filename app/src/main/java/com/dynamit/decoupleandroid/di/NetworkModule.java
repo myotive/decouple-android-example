@@ -3,6 +3,7 @@ package com.dynamit.decoupleandroid.di;
 import android.content.Context;
 
 import com.dynamit.decoupleandroid.BuildConfig;
+import com.dynamit.decoupleandroid.di.scope.ApplicationScope;
 import com.dynamit.decoupleandroid.network.StarWarsService;
 import com.dynamit.decoupleandroid.network.api.StarWarsAPI;
 import com.dynamit.decoupleandroid.network.api.TMDbAPI;
@@ -26,11 +27,13 @@ import retrofit.converter.GsonConverter;
 public class NetworkModule {
 
     @Provides
+    @ApplicationScope
     StarWarsAPI provideStarWarsAPI(@Named("StarWars")RestAdapter restAdapter){
         return restAdapter.create(StarWarsAPI.class);
     }
 
     @Provides
+    @ApplicationScope
     StarWarsService proviceStarWarsService(Context context){
         return new StarWarsService(context);
     }

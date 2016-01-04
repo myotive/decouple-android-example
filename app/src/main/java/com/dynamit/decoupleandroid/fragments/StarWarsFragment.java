@@ -14,6 +14,8 @@ import android.widget.Toast;
 import com.dynamit.decoupleandroid.R;
 import com.dynamit.decoupleandroid.SampleApplication;
 import com.dynamit.decoupleandroid.adapter.SearchResultAdapter;
+import com.dynamit.decoupleandroid.di.ApplicationComponent;
+import com.dynamit.decoupleandroid.di.DaggerStarWarsFragmentComponent;
 import com.dynamit.decoupleandroid.network.api.StarWarsAPI;
 import com.dynamit.decoupleandroid.network.models.FilmListResponse;
 import com.squareup.otto.Bus;
@@ -29,30 +31,37 @@ import retrofit.client.Response;
 /**
  * Created by michaelyotive_hr on 12/6/15.
  */
-public class DaggerFragment extends Fragment {
+public class StarWarsFragment extends Fragment {
 
     @Inject
     StarWarsAPI starWarsAPI;
     @Inject
     Bus bus;
+    @Inject
+    SearchResultAdapter searchResultAdapter;
 
     // Private members
     LinearLayoutManager linearLayoutManager;
     RecyclerView searchResults;
-    SearchResultAdapter searchResultAdapter;
     Button submit;
 
-    public static DaggerFragment newInstance() {
-        return new DaggerFragment();
+    public static StarWarsFragment newInstance() {
+        return new StarWarsFragment();
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        SampleApplication
+
+        ApplicationComponent applicationComponent = SampleApplication
                 .getApplication(getContext())
-                .getApplicationComponent()
+                .getApplicationComponent();
+
+        DaggerStarWarsFragmentComponent
+                .builder()
+                .applicationComponent(applicationComponent)
+                .build()
                 .inject(this);
     }
 
@@ -82,8 +91,6 @@ public class DaggerFragment extends Fragment {
 
     public void setupUI(View view){
         linearLayoutManager = new LinearLayoutManager(getContext());
-
-        searchResultAdapter = new SearchResultAdapter();
 
         searchResults = (RecyclerView)view.findViewById(R.id.rv_sw_results);
         searchResults.setLayoutManager(linearLayoutManager);

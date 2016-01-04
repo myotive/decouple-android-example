@@ -36,7 +36,7 @@ public class OttoFragment extends Fragment {
     LinearLayoutManager linearLayoutManager;
     RecyclerView searchResults;
     SearchResultAdapter searchResultAdapter;
-    Button submit;
+    Button submit, deadEvent;
 
     public static OttoFragment newInstance() {
         return new OttoFragment();
@@ -51,7 +51,7 @@ public class OttoFragment extends Fragment {
                 .getApplicationComponent()
                 .inject(this);
 
-        View view = inflater.inflate(R.layout.fragment_starwars,container, false);
+        View view = inflater.inflate(R.layout.fragment_otto,container, false);
 
         setupUI(view);
 
@@ -63,15 +63,23 @@ public class OttoFragment extends Fragment {
 
         searchResultAdapter = new SearchResultAdapter();
 
-        searchResults = (RecyclerView)view.findViewById(R.id.rv_sw_results);
+        searchResults = (RecyclerView)view.findViewById(R.id.rv_otto_results);
         searchResults.setLayoutManager(linearLayoutManager);
         searchResults.setAdapter(searchResultAdapter);
 
-        submit = (Button)view.findViewById(R.id.bt_sw_submit);
+        submit = (Button)view.findViewById(R.id.bt_otto_submit);
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 starWarsService.getFilms();
+            }
+        });
+
+        deadEvent = (Button)view.findViewById(R.id.bt_otto_dead_event);
+        deadEvent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                starWarsService.getPeople();
             }
         });
     }

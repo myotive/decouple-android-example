@@ -6,4 +6,5 @@
 
     <string name="action_about">About</string>
     <string name="button_sw_submit_text">Get Movies</string>
+    <string name="otto_dead_event_button_label">Test Dead Event</string>
 </resources>

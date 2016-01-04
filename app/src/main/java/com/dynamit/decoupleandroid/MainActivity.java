@@ -11,8 +11,9 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
-import com.dynamit.decoupleandroid.fragments.DaggerFragment;
+import com.dynamit.decoupleandroid.fragments.StarWarsFragment;
 import com.dynamit.decoupleandroid.fragments.NonDaggerFragment;
 import com.dynamit.decoupleandroid.fragments.OttoFragment;
 import com.dynamit.decoupleandroid.network.api.TMDbAPI;
@@ -21,6 +22,8 @@ import com.squareup.otto.DeadEvent;
 import com.squareup.otto.Subscribe;
 
 import javax.inject.Inject;
+
+import retrofit.RetrofitError;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -58,6 +61,18 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        bus.register(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        bus.unregister(this);
+    }
+
+    @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
@@ -77,14 +92,10 @@ public class MainActivity extends AppCompatActivity
             changeFragments(NonDaggerFragment.newInstance());
         }
         else if(id == R.id.nav_dagger){
-            changeFragments(DaggerFragment.newInstance());
+            changeFragments(StarWarsFragment.newInstance());
         }
         else if (id == R.id.nav_otto) {
             changeFragments(OttoFragment.newInstance());
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -100,7 +111,15 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Subscribe
+    public void onRetrofitError(RetrofitError error){
+        Log.i(TAG, "Retrofit Error");
+        Toast.makeText(MainActivity.this, "Unexpected Network Error Occurred", Toast.LENGTH_SHORT).show();
+
+    }
+
+    @Subscribe
     public void onDeadEvent(DeadEvent deadEvent){
         Log.i(TAG, "onDeadEvent: " + deadEvent.source.toString());
+        Toast.makeText(MainActivity.this, "No Subscribers to StarWarsAPI.getPeople()", Toast.LENGTH_SHORT).show();
     }
 }
