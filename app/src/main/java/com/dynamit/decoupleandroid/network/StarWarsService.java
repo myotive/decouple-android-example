@@ -1,6 +1,7 @@
 package com.dynamit.decoupleandroid.network;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.dynamit.decoupleandroid.SampleApplication;
 import com.dynamit.decoupleandroid.network.api.StarWarsAPI;
@@ -50,6 +51,7 @@ public class StarWarsService {
 
             @Override
             public void failure(RetrofitError error) {
+                Log.i(StarWarsService.class.getSimpleName(), error.getMessage());
                 bus.post(error);
             }
         });

@@ -36,8 +36,6 @@ public class StarWarsFragment extends Fragment {
     @Inject
     StarWarsAPI starWarsAPI;
     @Inject
-    Bus bus;
-    @Inject
     SearchResultAdapter searchResultAdapter;
 
     // Private members
@@ -78,15 +76,7 @@ public class StarWarsFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        bus.register(this);
-
         getActivity().setTitle("Star Wars Fragment");
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        bus.unregister(this);
     }
 
     public void setupUI(View view){
