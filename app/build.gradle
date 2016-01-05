@@ -39,7 +39,6 @@ android {
     buildTypes {
         debug{
             debuggable true
-            testCoverageEnabled true
             applicationIdSuffix ".debug"
 
             buildConfigField "boolean", "LOG_NETWORK", "true"
