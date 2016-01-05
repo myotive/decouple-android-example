@@ -80,7 +80,7 @@ public class StarWarsFragment extends Fragment {
         super.onResume();
         bus.register(this);
 
-        getActivity().setTitle("Dagger Fragment");
+        getActivity().setTitle("Star Wars Fragment");
     }
 
     @Override

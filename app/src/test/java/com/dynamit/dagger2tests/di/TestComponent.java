@@ -1,5 +1,6 @@
-package com.dynamit.decoupleandroid;
+package com.dynamit.dagger2tests.di;
 
+import com.dynamit.dagger2tests.StarWarsFragmentUnitTest;
 import com.dynamit.decoupleandroid.di.ApplicationComponent;
 import com.dynamit.decoupleandroid.di.scope.ApplicationScope;
 
@@ -11,5 +12,5 @@ import dagger.Component;
 @Component(modules = {DaggerTestApplicationModule.class, DaggerTestNetworkModule.class})
 @ApplicationScope
 public interface TestComponent extends ApplicationComponent {
-    void inject(MainActivityTest mainActivityTest);
+    void inject(StarWarsFragmentUnitTest starWarsFragmentUnitTest);
 }

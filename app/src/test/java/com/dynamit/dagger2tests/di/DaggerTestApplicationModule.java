@@ -1,4 +1,4 @@
-package com.dynamit.decoupleandroid;
+package com.dynamit.dagger2tests.di;
 
 import android.content.Context;
 
