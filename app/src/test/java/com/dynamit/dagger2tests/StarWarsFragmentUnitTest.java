@@ -35,7 +35,6 @@ import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 import org.robolectric.shadows.support.v4.SupportFragmentTestUtil;
 
-import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.inject.Inject;
