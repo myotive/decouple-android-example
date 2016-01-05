@@ -1,5 +1,7 @@
 package com.dynamit.dagger2tests;
 
+import android.support.v7.widget.RecyclerView;
+
 import com.dynamit.dagger2tests.di.DaggerTestApplicationModule;
 import com.dynamit.dagger2tests.di.DaggerTestComponent;
 import com.dynamit.dagger2tests.di.DaggerTestNetworkModule;
@@ -9,11 +11,16 @@ import com.dynamit.decoupleandroid.MainActivity;
 import com.dynamit.decoupleandroid.R;
 import com.dynamit.decoupleandroid.SampleApplication;
 import com.dynamit.decoupleandroid.fragments.OttoFragment;
+import com.dynamit.decoupleandroid.fragments.StarWarsFragment;
 import com.dynamit.decoupleandroid.network.api.StarWarsAPI;
+import com.dynamit.decoupleandroid.network.models.FilmListResponse;
 import com.dynamit.decoupleandroid.network.models.PeopleListResponse;
+import com.dynamit.decoupleandroid.network.models.common.Film;
 import com.squareup.otto.Bus;
 import com.squareup.otto.DeadEvent;
 import com.squareup.otto.Subscribe;
+
+import junit.framework.Assert;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -28,6 +35,7 @@ import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 import org.robolectric.shadows.support.v4.SupportFragmentTestUtil;
 
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.inject.Inject;
@@ -48,7 +56,9 @@ public class StarWarsFragmentUnitTest {
     StarWarsAPI starWarsAPI;
 
     @Captor
-    private ArgumentCaptor<Callback<PeopleListResponse>> cb;
+    private ArgumentCaptor<Callback<PeopleListResponse>> peopleListCaptor;
+    @Captor
+    private ArgumentCaptor<Callback<FilmListResponse>> filmListResponseCaptor;
 
     TestComponent testComponent;
 
@@ -69,27 +79,74 @@ public class StarWarsFragmentUnitTest {
         MockitoAnnotations.initMocks(this);
     }
 
+    @Test
+    public void testStarWarsFragment_GetFilms(){
+        StarWarsFragment fragment = StarWarsFragment.newInstance();
+        SupportFragmentTestUtil.startFragment(fragment, MainActivity.class);
+
+        FilmListResponse expectedListResponse = new FilmListResponse();
+        expectedListResponse.getResults().add(new Film());
+        expectedListResponse.getResults().add(new Film());
+        expectedListResponse.getResults().add(new Film());
+
+        fragment.getView().findViewById(R.id.bt_sw_submit).performClick();
+
+        Mockito.verify(starWarsAPI).getFilms(filmListResponseCaptor.capture());
+        filmListResponseCaptor.getValue().success(expectedListResponse, null);
+
+        RecyclerView recyclerView = (RecyclerView)fragment.getView().findViewById(R.id.rv_sw_results);
+        Assert.assertEquals(3, recyclerView.getAdapter().getItemCount());
+    }
+
+    @Test(timeout = 1000)
+    public void testOttoFragment_GetFilmResults(){
+        final AtomicBoolean testDone = new AtomicBoolean(false);
+
+        OttoFragment fragment = OttoFragment.newInstance();
+        SupportFragmentTestUtil.startFragment(fragment, MainActivity.class);
+
+        // test event
+        Object event = new Object() {
+            @Subscribe
+            public void onResults(FilmListResponse FilmListResponse) {
+                testDone.set(true);
+            }
+        };
+        bus.register(event);
+
+        fragment.getView().findViewById(R.id.bt_otto_submit).performClick();
+
+        Mockito.verify(starWarsAPI).getFilms(filmListResponseCaptor.capture());
+        filmListResponseCaptor.getValue().success(new FilmListResponse(), null);
+
+        while(!testDone.get());
+
+        bus.unregister(event);
+    }
 
     @Test(timeout = 1000)
     public void testOttoFragment_DeadEvent(){
-        final AtomicBoolean testDone = new AtomicBoolean(false);;
+        final AtomicBoolean testDone = new AtomicBoolean(false);
 
         OttoFragment fragment = OttoFragment.newInstance();
         SupportFragmentTestUtil.startFragment(fragment, MainActivity.class);
 
         // test dead event
-        bus.register(new Object() {
+        Object event = new Object() {
             @Subscribe
             public void onDeadEvent(DeadEvent deadEvent){
                 testDone.set(true);
             }
-        });
+        };
+        bus.register(event);
 
         fragment.getView().findViewById(R.id.bt_otto_dead_event).performClick();
 
-        Mockito.verify(starWarsAPI).getPeople(cb.capture());
-        cb.getValue().success(new PeopleListResponse(), null);
+        Mockito.verify(starWarsAPI).getPeople(peopleListCaptor.capture());
+        peopleListCaptor.getValue().success(new PeopleListResponse(), null);
 
         while(!testDone.get());
+
+        bus.unregister(event);
     }
 }

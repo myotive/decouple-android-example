@@ -36,8 +36,9 @@ public class DaggerTestNetworkModule {
     }
 
     @Provides
-    TMDbAPI provideTMDbAPI(@Named("TMDbAPI") RestAdapter restAdapter) {
-        return restAdapter.create(TMDbAPI.class);
+    @ApplicationScope
+    TMDbAPI provideTMDbAPI() {
+        return Mockito.mock(TMDbAPI.class);
     }
 
     @Provides
