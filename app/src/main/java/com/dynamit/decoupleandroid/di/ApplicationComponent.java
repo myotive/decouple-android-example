@@ -9,10 +9,6 @@ import com.squareup.otto.Bus;
 
 import dagger.Component;
 
-/**
- * TODO: Add a class header comment!
- * Created by michaelyotive on 11/29/15.
- */
 @Component(modules = {ApplicationModule.class, NetworkModule.class})
 @ApplicationScope
 public interface ApplicationComponent {

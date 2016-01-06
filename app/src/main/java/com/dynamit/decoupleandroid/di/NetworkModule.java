@@ -26,21 +26,33 @@ import retrofit.converter.GsonConverter;
 @Module
 public class NetworkModule {
 
+    /**
+     * This provider is marked as ApplicationScope, making it a singleton.
+     * @param restAdapter
+     * @return
+     */
     @Provides
     @ApplicationScope
     StarWarsAPI provideStarWarsAPI(@Named("StarWars")RestAdapter restAdapter){
         return restAdapter.create(StarWarsAPI.class);
     }
 
+
+    /**
+     * This provider isn't used in this sample. I wanted to show how named qualifiers are used
+     * in dagger and how you can have multiple providers for the same object.
+     * @param restAdapter
+     * @return
+     */
+    @Provides
+    TMDbAPI provideTMDbAPI(@Named("TMDbAPI") RestAdapter restAdapter){
+        return restAdapter.create(TMDbAPI.class);
+    }
+
     @Provides
     @ApplicationScope
     StarWarsService proviceStarWarsService(Context context){
         return new StarWarsService(context);
-    }
-
-    @Provides
-    TMDbAPI provideTMDbAPI(@Named("TMDbAPI") RestAdapter restAdapter){
-        return restAdapter.create(TMDbAPI.class);
     }
 
     @Provides

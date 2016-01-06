@@ -9,7 +9,7 @@ import retrofit.http.GET;
 import retrofit.http.Path;
 
 /**
- * Created by michaelyotive_hr on 12/6/15.
+ * Retrofit API of the SWAPI (https://swapi.co/).
  */
 public interface StarWarsAPI {
 

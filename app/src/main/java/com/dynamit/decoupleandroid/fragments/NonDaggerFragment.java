@@ -31,7 +31,7 @@ import retrofit.client.Response;
 import retrofit.converter.GsonConverter;
 
 /**
- * Created by michaelyotive_hr on 12/6/15.
+ * This fragment illustrates how to build the StarWarsAPI without Dagger
  */
 public class NonDaggerFragment extends Fragment {
 

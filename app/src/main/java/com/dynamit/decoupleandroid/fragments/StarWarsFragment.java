@@ -101,9 +101,12 @@ public class StarWarsFragment extends Fragment {
                     @Override
                     public void success(FilmListResponse filmListResponse, Response response) {
 
+                        // Convert results to list of strings
                         List<String> searchResults = FilmListResponse.ConvertToList(filmListResponse);
 
+                        // Update search results adapter with new data.
                         searchResultAdapter.setSearchResults(searchResults);
+                        // Notify UI to update.
                         searchResultAdapter.notifyDataSetChanged();
                     }
 

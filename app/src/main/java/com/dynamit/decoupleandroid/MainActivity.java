@@ -13,10 +13,9 @@ import android.view.MenuItem;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import com.dynamit.decoupleandroid.fragments.StarWarsFragment;
 import com.dynamit.decoupleandroid.fragments.NonDaggerFragment;
 import com.dynamit.decoupleandroid.fragments.OttoFragment;
-import com.dynamit.decoupleandroid.network.api.TMDbAPI;
+import com.dynamit.decoupleandroid.fragments.StarWarsFragment;
 import com.squareup.otto.Bus;
 import com.squareup.otto.DeadEvent;
 import com.squareup.otto.Subscribe;

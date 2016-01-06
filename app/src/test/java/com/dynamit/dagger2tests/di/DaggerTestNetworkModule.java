@@ -17,10 +17,6 @@ import dagger.Module;
 import dagger.Provides;
 import retrofit.RestAdapter;
 
-/**
- * TODO: Add a class header comment!
- * Created by michaelyotive on 11/29/15.
- */
 @Module
 public class DaggerTestNetworkModule {
 

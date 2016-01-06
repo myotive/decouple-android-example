@@ -16,7 +16,8 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 /**
- * Created by michaelyotive_hr on 12/22/15.
+ * The StarWarsService class wraps the retrofit StarWarsAPI and exposes
+ * responses to be used on the bus.
  */
 public class StarWarsService {
     @Inject

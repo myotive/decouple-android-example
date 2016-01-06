@@ -98,6 +98,9 @@ public class OttoFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+
+        // Register with bus using Android lifecycle so there isn't unintended consequences when
+        // fragment is destroyed.
         bus.register(this);
 
         getActivity().setTitle("Otto Fragment");

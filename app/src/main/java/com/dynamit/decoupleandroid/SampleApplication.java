@@ -7,10 +7,6 @@ import com.dynamit.decoupleandroid.di.ApplicationModule;
 import com.dynamit.decoupleandroid.di.DaggerApplicationComponent;
 import com.dynamit.decoupleandroid.di.NetworkModule;
 
-/**
- * TODO: Add a class header comment!
- * Created by michaelyotive on 11/29/15.
- */
 public class SampleApplication extends android.app.Application {
 
     ApplicationComponent applicationComponent;
@@ -42,6 +38,12 @@ public class SampleApplication extends android.app.Application {
     public ApplicationComponent getApplicationComponent(){
         return applicationComponent;
     }
+
+    /**
+     * Allowing ApplicationComponent to be set. This allows unit tests to provide
+     * Mocked objects though Dagger.
+     * @param applicationComponent
+     */
     public void setApplicationComponent(ApplicationComponent applicationComponent){
         this.applicationComponent = applicationComponent;
     }

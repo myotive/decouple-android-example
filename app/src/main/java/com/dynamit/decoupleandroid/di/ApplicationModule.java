@@ -9,10 +9,7 @@ import com.squareup.otto.ThreadEnforcer;
 import dagger.Module;
 import dagger.Provides;
 
-/**
- * TODO: Add a class header comment!
- * Created by michaelyotive on 11/29/15.
- */
+
 @Module
 public class ApplicationModule {
 

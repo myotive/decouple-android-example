@@ -5,7 +5,10 @@ import retrofit.http.Path;
 import retrofit.http.Query;
 
 /**
- * Created by michaelyotive_hr on 12/20/15.
+ * themoviedb.org API
+ * This API is only being used in this sample app to illustrate the use of qualifiers
+ * within Dagger 2.
+ * See NetworkModule.
  */
 public interface TMDbAPI {
     @GET("/{version}/search/keyword")
