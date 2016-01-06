@@ -33,6 +33,7 @@ import retrofit.client.Response;
  */
 public class StarWarsFragment extends Fragment {
 
+    // Injections
     @Inject
     StarWarsAPI starWarsAPI;
     @Inject
@@ -51,11 +52,17 @@ public class StarWarsFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
+        // Obtain the ApplicationComponent created in the SampleApplication class
         ApplicationComponent applicationComponent = SampleApplication
                 .getApplication(getContext())
                 .getApplicationComponent();
 
+        // Build the StarWarsFragmentComponent, which has a Dependency on ApplicationComponent.
+        // Pass the instance of ApplicationComponent into StarWarsFragment, which keeps ApplicationScope -
+        // meaning any singletons created in ApplicationComponent will be the same reference in
+        // StarWarsFragmentComponent.
+        // Once StarWarsFragmentComponent is destroyed, only StarWarsFragmentComponent's instances
+        // will be cleaned up.
         DaggerStarWarsFragmentComponent
                 .builder()
                 .applicationComponent(applicationComponent)

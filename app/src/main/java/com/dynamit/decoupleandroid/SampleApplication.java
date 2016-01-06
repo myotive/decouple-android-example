@@ -15,6 +15,11 @@ public class SampleApplication extends android.app.Application {
 
     ApplicationComponent applicationComponent;
 
+    /**
+     * Helper method to obtain SampleApplication class from context.
+     * @param context
+     * @return SampleApplication
+     */
     public static SampleApplication getApplication(Context context){
         return (SampleApplication)context.getApplicationContext();
     }

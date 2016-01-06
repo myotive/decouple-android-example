@@ -30,12 +30,11 @@ public class MainActivity extends AppCompatActivity
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
+    // Injection
     @Inject
     Bus bus;
 
-    @Inject
-    TMDbAPI tmDbAPI;
-
+    // Views
     RelativeLayout mainContent;
 
     @Override
@@ -56,19 +55,25 @@ public class MainActivity extends AppCompatActivity
 
         mainContent = (RelativeLayout)findViewById(R.id.main_content);
 
-
+        // Obtain reference to SampleApplication, grab the ApplicationComponent
+        // and then inject the scoped Bus (makes Bus a Singleton).
         SampleApplication.getApplication(this).getApplicationComponent().inject(this);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+
+        // Register to bus through Android lifecycle
         bus.register(this);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+
+        // Unregister from bus through Android lifecycle to prevent unintended issues when
+        // app is backgrounded or activity is destroyed.
         bus.unregister(this);
     }
 
@@ -110,6 +115,10 @@ public class MainActivity extends AppCompatActivity
                 .commit();
     }
 
+    /**
+     * Handle retrofit errors.
+     * @param error
+     */
     @Subscribe
     public void onRetrofitError(RetrofitError error){
         Log.i(TAG, "Retrofit Error");
@@ -117,9 +126,17 @@ public class MainActivity extends AppCompatActivity
 
     }
 
+    /**
+     * Handles when an event is raised but there are no subscribers on Bus.
+     * @param deadEvent
+     */
     @Subscribe
     public void onDeadEvent(DeadEvent deadEvent){
-        Log.i(TAG, "onDeadEvent: " + deadEvent.source.toString());
-        Toast.makeText(MainActivity.this, "No Subscribers to StarWarsAPI.getPeople()", Toast.LENGTH_SHORT).show();
+
+        String eventClassName = deadEvent.event.getClass().getSimpleName();
+        Log.i(TAG, "onDeadEvent: " + eventClassName);
+        Toast.makeText(MainActivity.this,
+                "No Subscribers to " + eventClassName, Toast.LENGTH_SHORT)
+                .show();
     }
 }

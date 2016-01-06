@@ -27,6 +27,7 @@ import javax.inject.Inject;
  */
 public class OttoFragment extends Fragment {
 
+    // Injections
     @Inject
     StarWarsService starWarsService;
     @Inject
@@ -46,6 +47,8 @@ public class OttoFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
+        // Grab the ApplicationComponent off of the SampleApplication class
+        // and inject the StarWarsService and Bus.
         SampleApplication
                 .getApplication(getContext())
                 .getApplicationComponent()
@@ -71,6 +74,9 @@ public class OttoFragment extends Fragment {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Through the Star Wars service, call the StarWarsAPI.
+                // If the StarWarsAPI succeeds, it will post the success event to the bus, which
+                // we have subscribed to below.
                 starWarsService.getFilms();
             }
         });
@@ -79,6 +85,11 @@ public class OttoFragment extends Fragment {
         deadEvent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Through the Star Wars service, call the StarWarsAPI.
+                // If the StarWarsAPI succeeds, it will post the success event to the bus
+                //
+                // Since we are not subscribed to this event in this Fragment, nor anywhere else,
+                // Otto will fire the DeadEvent, which has been subscribed to on MainActivity.
                 starWarsService.getPeople();
             }
         });
@@ -98,10 +109,18 @@ public class OttoFragment extends Fragment {
         bus.unregister(this);
     }
 
+    /**
+     * Handle the FilmListResponse bus event.
+     * @param filmListResponse
+     */
     @Subscribe
     public void onGetFilmsResult(FilmListResponse filmListResponse){
+
+        // Convert the list of films to an array of strings
         List<String> searchResults = FilmListResponse.ConvertToList(filmListResponse);
 
+        // Set the search result adapter, which is bound to our RecyclerView, to display
+        // list of movies.
         searchResultAdapter.setSearchResults(searchResults);
         searchResultAdapter.notifyDataSetChanged();
     }
