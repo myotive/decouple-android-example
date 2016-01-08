@@ -4,7 +4,7 @@ Decouple Android with Dagger and Otto
 
 This repository contains the sample code that accompanies my CodeMash 2016 presentation on Dagger 2 and Otto.
 
-// todo: provide link to presentation slides
+[Here are my slides](https://docs.google.com/presentation/d/1Q5QvmWF2U7xh54rcTQdVx1jE_eRN-VRqZF5CWObJQ5s/edit?usp=sharing)
 
 [Dagger](https://google.github.io/dagger/) is a dependency injection framework for Android currently being maintained by Google.
 
@@ -49,7 +49,7 @@ To run the unit tests for the application:
 * [Dagger 2: a new type of Dependency Injection](https://www.youtube.com/watch?v=oK_XtfXPkqw)
 * [Dagger 2: A tutorial](https://www.youtube.com/watch?v=SKFB8u0-VA0)
 * https://github.com/konmik/konmik.github.io/wiki/Snorkeling-with-Dagger-2
-* [Watch this](https://www.youtube.com/watch?v=JNbz_rgdQ10)
+* https://www.youtube.com/watch?v=JNbz_rgdQ10
 * http://slidenerd.com/2015/09/11/android-dependency-injection-with-android-annotations-and-dagger-2/
 * https://publicobject.com/2014/11/15/dagger-2-has-components/
 * http://code.tutsplus.com/tutorials/dependency-injection-with-dagger-2-on-android--cms-23345
@@ -78,3 +78,6 @@ To run the unit tests for the application:
 * [RXAndroid vs EventBus](https://github.com/futurice/android-best-practices/issues/12)
 * https://www.reddit.com/r/androiddev/comments/2xsinq/reactive_programming_vs_event_bus/
 * http://nerds.weddingpartyapp.com/tech/2014/12/24/implementing-an-event-bus-with-rxjava-rxbus/
+
+#### Both Otto and Dagger
+* http://www.infoq.com/presentations/Android-Design
